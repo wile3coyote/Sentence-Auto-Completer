@@ -1,1 +1,8 @@
-# Sentence-Auto-Completer
+# Text Generation to auto complete sentences using keras
+I used SciFi Stories dataset(https://www.kaggle.com/jannesklaas/scifi-stories-text-corpus) to create and train two types of models. The training is done entirely using keras. The two models are word-based text generator and character-based text generator
+
+## Word Based Text Generator
+First step would be pre-processing and cleaning the raw data. I also didn't remove stop words as removing them would generate nonsensical sentences. After which I divide the dataset as a string to a list of sentences. Since I want to auto complete sentences, the scope of each sequence would be the sentence itself. I then generated the sequences by splitting each sentence and using that as the training data to predict the word immediately after the sequence. For example for a sentence with 10 words and split of 1/3, the first sequence would be the first 3 words as a means of predicting the 4th word, for the next sequence, it would just shift the order by one word. Initially after creating all the sequences, one-hot encoding the labels blew up my memory, so for training I divided it into batches which orderly create the labels, and train on that. Finally once it's trained I used a sample sentence to generate words till it generated a period.
+
+## Character Based Text Generator
+The first few steps is similar to that of word based model until generating sequences. For generating sequences, it takes each sentence and splits into characters and does a split based on the split value. Though the vocavulary size compared to word based model is quite low(~36), the number of sequences was almost 20 times that of word based model. After training the model, the generation is similar to word based model.
